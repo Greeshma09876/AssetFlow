@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Categories | AssetFlow</title>
+
+    <link rel="stylesheet" th:href="@{/css/asset-style.css}">
+    <link rel="stylesheet" th:href="@{/css/category-style.css}">
+</head>
+<body>
+
+<div class="app-container">
+
+	<aside class="sidebar">
+
+	    <!-- BRAND -->
+	    <div class="brand">
+	        <div class="brand-icon">A</div>
+
+	        <div class="brand-text">
+	            <span>AssetFlow</span>
+	            <small>IT ASSET MANAGEMENT</small>
+	        </div>
+	    </div>
+
+	    <div class="menu-heading">MAIN MENU</div>
+
+	    <nav class="sidebar-menu">
+
+	        <a th:href="@{/dashboard}" class="menu-item">
+	            <span>▦</span> Dashboard
+	        </a>
+
+	        <a th:href="@{/employees}" class="menu-item">
+	            <span>♙</span> Employees
+	        </a>
+
+	        <a th:href="@{/assets}" class="menu-item">
+	            <span>▣</span> Assets
+	        </a>
+
+	        <a th:href="@{/categories}" class="menu-item active">
+	            <span>▤</span> Categories
+	        </a>
+
+	        <a th:href="@{/assignments}" class="menu-item">
+	            <span>⇄</span> Assignments
+	        </a>
+
+	        <a th:href="@{/returns}" class="menu-item">
+	            <span>↩</span> Returns
+	        </a>
+
+	        <a th:href="@{/maintenance}" class="menu-item">
+	            <span>⚙</span> Maintenance
+	        </a>
+
+	        <a th:href="@{/status-history}" class="menu-item">
+	            <span>◷</span> Status History
+	        </a>
+
+	    </nav>
+
+	    <div class="sidebar-bottom">
+<br>
+	        <div class="support-box">
+	            <h4>Need Help?</h4>
+	            <p>Manage your assets efficiently.</p>
+	        </div>
+
+	        <p class="sidebar-version">AssetFlow v1.0</p>
+
+	    </div>
+
+	</aside>
+
+    <main class="main-content category-page">
+
+        <header class="topbar">
+            <div>
+                <h3>Category Management</h3>
+                <p>Organize your company equipment</p>
+            </div>
+
+            <div class="admin-profile">
+                <div class="avatar">A</div>
+                <div>
+                    <strong>Administrator</strong>
+                    <small>System Admin</small>
+                </div>
+            </div>
+        </header>
+
+        <div class="page-heading">
+            <div>
+                <h1>Asset Categories</h1>
+                <p>Manage and organize your IT asset categories.</p>
+            </div>
+
+            <a th:href="@{/categories/add}" class="add-button">
+                + Add New Category
+            </a>
+        </div>
+
+        <div class="category-stats">
+            <div class="category-stat-card">
+                <div class="category-stat-icon">▤</div>
+                <div>
+                    <p>Total Categories</p>
+                    <h2 th:text="${#lists.size(categories)}">0</h2>
+                    <small>Registered categories</small>
+                </div>
+            </div>
+        </div>
+
+        <section class="category-card">
+
+            <div class="category-card-heading">
+                <div>
+                    <h2>Category Directory</h2>
+                    <p>View and manage all asset categories.</p>
+                </div>
+            </div>
+
+            <div class="category-search">
+                <span>⌕</span>
+                <input type="text"
+                       id="categorySearch"
+                       placeholder="Search by category name or description...">
+            </div>
+
+            <div class="table-responsive">
+                <table class="category-table" id="categoryTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Category Name</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="category : ${categories}">
+                            <td class="category-id"
+                                th:text="${category.id}"></td>
+
+                            <td>
+                                <div class="category-name">
+                                    <div class="category-icon">▤</div>
+                                    <strong th:text="${category.categoryName}"></strong>
+                                </div>
+                            </td>
+
+                            <td class="category-description"
+                                th:text="${category.description != null and !#strings.isEmpty(category.description) ? category.description : 'No description'}">
+                            </td>
+
+                            <td>
+                                <div class="action-buttons">
+                                    <a th:href="@{/categories/edit/{id}(id=${category.id})}"
+                                       class="edit-btn">Edit</a>
+
+                                    <a th:href="@{/categories/delete/{id}(id=${category.id})}"
+                                       class="delete-btn"
+                                       onclick="return confirm('Are you sure you want to delete this category?')">
+                                        Delete
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr th:if="${#lists.isEmpty(categories)}">
+                            <td colspan="4" class="empty-message">
+                                No categories found. Please add a category.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p id="categoryNoResults" class="empty-message" hidden>
+                No matching categories found.
+            </p>
+
+        </section>
+
+        <footer class="page-footer">
+            © 2026 AssetFlow. All rights reserved.
+        </footer>
+
+    </main>
+</div>
+
+<script th:src="@{/js/categories.js}"></script>
+
+</body>
+</html>

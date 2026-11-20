@@ -1,0 +1,385 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AssetFlow | Dashboard</title>
+
+    <link rel="stylesheet" th:href="@{/css/asset-style.css}">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <!-- BRAND -->
+        <div class="brand">
+
+            <div class="brand-icon">A</div>
+
+            <div class="brand-text">
+                <span>AssetFlow</span>
+                <small>IT ASSET MANAGEMENT</small>
+            </div>
+
+        </div>
+
+        <!-- MENU HEADING -->
+        <div class="menu-heading">MAIN MENU</div>
+
+        <!-- NAVIGATION -->
+        <nav class="sidebar-menu">
+
+            <a th:href="@{/dashboard}" class="menu-item active">
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a th:href="@{/employees}" class="menu-item">
+                <span>♙</span>
+                Employees
+            </a>
+
+            <a th:href="@{/assets}" class="menu-item">
+                <span>▣</span>
+                Assets
+            </a>
+
+            <a th:href="@{/categories}" class="menu-item">
+                <span>▤</span>
+                Categories
+            </a>
+
+            <a th:href="@{/assignments}" class="menu-item">
+                <span>⇄</span>
+                Assignments
+            </a>
+
+            <a th:href="@{/returns}" class="menu-item">
+                <span>↩</span>
+                Returns
+            </a>
+
+            <a th:href="@{/maintenance}" class="menu-item">
+                <span>⚙</span>
+                Maintenance
+            </a>
+
+            <a th:href="@{/status-history}" class="menu-item">
+                <span>◷</span>
+                Status History
+            </a>
+
+        </nav>
+
+        <!-- SIDEBAR BOTTOM -->
+        <div class="sidebar-bottom">
+
+            <div class="support-box">
+                <h4>Need Help?</h4>
+                <p>Manage your assets efficiently.</p>
+            </div>
+
+            <p class="sidebar-version">
+                AssetFlow v1.0
+            </p>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+        <header class="topbar">
+
+            <div>
+                <h2>Dashboard Overview</h2>
+                <p>Welcome back! Here's what's happening today.</p>
+            </div>
+
+            <div class="topbar-right">
+
+                <div class="date-display" id="currentDate"></div>
+
+                <div class="profile">
+
+                    <div class="profile-avatar">A</div>
+
+                    <div>
+                        <strong>Administrator</strong>
+                        <small>System Admin</small>
+                    </div>
+
+                </div>
+				<form th:action="@{/logout}" method="post">
+				    <button type="submit" class="logout-btn">
+				        <span>↪</span> Logout
+				    </button>
+				</form>
+            </div>
+
+        </header>
+
+
+        <!-- WELCOME SECTION -->
+        <section class="welcome-section">
+
+            <div>
+                <h1>Asset Overview</h1>
+                <p>Monitor and manage your organization's IT assets.</p>
+            </div>
+
+            <a th:href="@{/assets/add}" class="primary-btn">
+                + Add New Asset
+            </a>
+
+        </section>
+
+
+        <!-- STATISTICS CARDS -->
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+                    <span>Total Assets</span>
+                    <div class="stat-icon blue">▣</div>
+                </div>
+
+                <h2 th:text="${totalAssets}">0</h2>
+                <p>Registered assets</p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+                    <span>Available</span>
+                    <div class="stat-icon green">✓</div>
+                </div>
+
+                <h2 th:text="${availableAssets}">0</h2>
+                <p>Ready for assignment</p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+                    <span>Assigned</span>
+                    <div class="stat-icon purple">⇄</div>
+                </div>
+
+                <h2 th:text="${assignedAssets}">0</h2>
+                <p>Currently in use</p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+                    <span>Under Repair</span>
+                    <div class="stat-icon orange">⚙</div>
+                </div>
+
+                <h2 th:text="${underRepairAssets}">0</h2>
+                <p>Maintenance required</p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+                    <span>Retired</span>
+                    <div class="stat-icon grey">▤</div>
+                </div>
+
+                <h2 th:text="${retiredAssets}">0</h2>
+                <p>Retired equipment</p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+                    <span>Lost</span>
+                    <div class="stat-icon red">!</div>
+                </div>
+
+                <h2 th:text="${lostAssets}">0</h2>
+                <p>Lost or missing assets</p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ANALYTICS SECTION -->
+        <section class="analytics-grid">
+
+            <!-- CHART -->
+            <div class="content-card chart-card">
+
+                <div class="section-header">
+
+                    <div>
+                        <h3>Asset Distribution</h3>
+                        <p>Overview by current asset status</p>
+                    </div>
+
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="assetChart"></canvas>
+                </div>
+
+            </div>
+
+
+            <!-- ASSET SUMMARY -->
+            <div class="content-card summary-card">
+
+                <div class="section-header">
+
+                    <div>
+                        <h3>Asset Summary</h3>
+                        <p>Current inventory breakdown</p>
+                    </div>
+
+                </div>
+
+                <div class="summary-list">
+
+                    <div class="summary-item">
+                        <span class="summary-dot green-dot"></span>
+                        <span>Available</span>
+                        <strong th:text="${availableAssets}">0</strong>
+                    </div>
+
+                    <div class="summary-item">
+                        <span class="summary-dot purple-dot"></span>
+                        <span>Assigned</span>
+                        <strong th:text="${assignedAssets}">0</strong>
+                    </div>
+
+                    <div class="summary-item">
+                        <span class="summary-dot orange-dot"></span>
+                        <span>Under Repair</span>
+                        <strong th:text="${underRepairAssets}">0</strong>
+                    </div>
+
+                    <div class="summary-item">
+                        <span class="summary-dot grey-dot"></span>
+                        <span>Retired</span>
+                        <strong th:text="${retiredAssets}">0</strong>
+                    </div>
+
+                    <div class="summary-item">
+                        <span class="summary-dot red-dot"></span>
+                        <span>Lost</span>
+                        <strong th:text="${lostAssets}">0</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- QUICK ACTIONS -->
+        <section class="content-card quick-actions">
+
+            <div class="section-header">
+
+                <div>
+                    <h3>Quick Actions</h3>
+                    <p>Frequently used management operations</p>
+                </div>
+
+            </div>
+
+            <div class="action-grid">
+
+                <a th:href="@{/assets/add}" class="action-item">
+
+                    <span class="action-icon blue">+</span>
+
+                    <div>
+                        <strong>Add Asset</strong>
+                        <small>Register new equipment</small>
+                    </div>
+
+                </a>
+
+
+                <a th:href="@{/employees/add}" class="action-item">
+
+                    <span class="action-icon green">♙</span>
+
+                    <div>
+                        <strong>Add Employee</strong>
+                        <small>Register an employee</small>
+                    </div>
+
+                </a>
+
+
+                <a th:href="@{/assignments/add}" class="action-item">
+
+                    <span class="action-icon purple">⇄</span>
+
+                    <div>
+                        <strong>Assign Asset</strong>
+                        <small>Allocate equipment</small>
+                    </div>
+
+                </a>
+
+
+                <a th:href="@{/maintenance/add}" class="action-item">
+
+                    <span class="action-icon orange">⚙</span>
+
+                    <div>
+                        <strong>Report Maintenance</strong>
+                        <small>Record an asset issue</small>
+                    </div>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            © 2026 AssetFlow. IT Asset Management System.
+        </footer>
+
+    </main>
+
+</div>
+
+<script th:src="@{/js/dashboard.js}"></script>
+
+</body>
+</html>

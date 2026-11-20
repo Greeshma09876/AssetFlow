@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Status History | AssetFlow</title>
+    <link rel="stylesheet" th:href="@{/css/asset-style.css}">
+    <link rel="stylesheet" th:href="@{/css/status-history-style.css}">
+</head>
+<body>
+
+<div class="app-container">
+
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-icon">A</div>
+            <span>AssetFlow</span>
+        </div>
+
+        <p class="sidebar-label">MAIN MENU</p>
+
+        <nav class="sidebar-nav">
+            <a th:href="@{/dashboard}"><span>▦</span> Dashboard</a>
+            <a th:href="@{/employees}"><span>♙</span> Employees</a>
+            <a th:href="@{/assets}"><span>▣</span> Assets</a>
+            <a th:href="@{/categories}"><span>▤</span> Categories</a>
+            <a th:href="@{/assignments}"><span>⇄</span> Assignments</a>
+            <a th:href="@{/returns}"><span>↩</span> Returns</a>
+            <a th:href="@{/maintenance}"><span>⚙</span> Maintenance</a>
+            <a th:href="@{/status-history}" class="active"><span>◷</span> Status History</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <h3>Asset Management</h3>
+                <p>Manage your organization's IT equipment</p>
+            </div>
+            <div class="admin-profile">
+                <div class="admin-avatar">A</div>
+                <span>Administrator</span>
+            </div>
+        </header>
+
+        <section class="page-content">
+
+            <div class="page-heading">
+                <div>
+                    <h1>Add Status History</h1>
+                    <p>Record a new status change for an asset</p>
+                </div>
+            </div>
+
+            <div class="history-form-card">
+
+                <div class="form-card-heading">
+                    <h2>Status Change Information</h2>
+                    <p>Select an asset and enter its new status.</p>
+                </div>
+
+                <form th:action="@{/status-history/save}"
+                      th:object="${history}"
+                      method="post"
+                      class="history-form">
+
+                    <div class="history-form-grid">
+
+                        <div class="form-group full-width">
+                            <label>Select Asset <span>*</span></label>
+
+                            <select name="assetId" required>
+                                <option value="">Select Asset</option>
+
+                                <option th:each="asset : ${assets}"
+                                        th:value="${asset.id}"
+                                        th:text="${asset.assetTag + ' - ' + asset.assetName}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>New Status <span>*</span></label>
+
+                            <select th:field="*{newStatus}" required>
+                                <option value="">Select Status</option>
+                                <option value="Available">Available</option>
+                                <option value="Assigned">Assigned</option>
+                                <option value="Under Repair">Under Repair</option>
+                                <option value="Retired">Retired</option>
+                                <option value="Lost">Lost</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>Reason</label>
+                            <textarea th:field="*{reason}"
+                                      rows="4"
+                                      placeholder="Explain why the asset status is changing..."></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="history-form-actions">
+                        <a th:href="@{/status-history}" class="cancel-button">Cancel</a>
+                        <button type="submit" class="save-button">Save History</button>
+                    </div>
+
+                </form>
+            </div>
+
+        </section>
+    </main>
+</div>
+
+</body>
+</html>

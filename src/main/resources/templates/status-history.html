@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status History | AssetFlow</title>
+    <link rel="stylesheet" th:href="@{/css/asset-style.css}">
+    <link rel="stylesheet" th:href="@{/css/status-history-style.css}">
+</head>
+<body>
+
+<div class="app-container">
+
+
+	<aside class="sidebar">
+	    <div class="brand">
+	        <div class="brand-icon">A</div>
+	        <div class="brand-text">
+	            <span>AssetFlow</span>
+	            <small>IT ASSET MANAGEMENT</small>
+	        </div>
+	    </div>
+
+	    <div class="menu-heading">MAIN MENU</div>
+
+	    <nav class="sidebar-menu">
+	        <a th:href="@{/dashboard}" class="menu-item">
+	            <span>▦</span> Dashboard
+	        </a>
+	        <a th:href="@{/employees}" class="menu-item">
+	            <span>♙</span> Employees
+	        </a>
+	        <a th:href="@{/assets}" class="menu-item">
+	            <span>▣</span> Assets
+	        </a>
+	        <a th:href="@{/categories}" class="menu-item">
+	            <span>▤</span> Categories
+	        </a>
+	        <a th:href="@{/assignments}" class="menu-item">
+	            <span>⇄</span> Assignments
+	        </a>
+	        <a th:href="@{/returns}" class="menu-item">
+	            <span>↩</span> Returns
+	        </a>
+	        <a th:href="@{/maintenance}" class="menu-item">
+	            <span>⚙</span> Maintenance
+	        </a>
+	        <a th:href="@{/status-history}" class="menu-item active">
+	            <span>◷</span> Status History
+	        </a>
+	    </nav>
+
+	    <div class="sidebar-bottom">
+			<br>
+			<div class="support-box">
+			                <h4>Need Help?</h4>
+			                <p>Manage your assets efficiently.</p>
+			            </div>
+	        
+	        <p class="sidebar-version">AssetFlow v1.0</p>
+	    </div>
+	</aside>
+
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <h3>Asset Management</h3>
+                <p>Manage your organization's IT equipment</p>
+            </div>
+
+            
+        </header>
+
+        <section class="page-content">
+
+            <div class="page-heading">
+                <div>
+                    <h1>Asset Status History</h1>
+                    <p>Track every status change made to your assets</p>
+                </div>
+
+                <a th:href="@{/status-history/add}" class="add-button">
+                    + Add History Record
+                </a>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="history-stats">
+
+                <div class="history-stat-card">
+                    <div class="history-stat-icon">◷</div>
+                    <div>
+                        <p>Total Changes</p>
+                        <h2 th:text="${#lists.size(historyList)}">0</h2>
+                    </div>
+                </div>
+
+                <div class="history-stat-card">
+                    <div class="history-stat-icon available-icon">✓</div>
+                    <div>
+                        <p>Changed to Available</p>
+                        <h2 th:text="${#lists.size(historyList.?[newStatus == 'Available'])}">0</h2>
+                    </div>
+                </div>
+
+                <div class="history-stat-card">
+                    <div class="history-stat-icon repair-icon">⚙</div>
+                    <div>
+                        <p>Changed to Under Repair</p>
+                        <h2 th:text="${#lists.size(historyList.?[newStatus == 'Under Repair'])}">0</h2>
+                    </div>
+                </div>
+
+                <div class="history-stat-card">
+                    <div class="history-stat-icon assigned-icon">⇄</div>
+                    <div>
+                        <p>Changed to Assigned</p>
+                        <h2 th:text="${#lists.size(historyList.?[newStatus == 'Assigned'])}">0</h2>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- History Table -->
+            <div class="history-table-card">
+
+                <div class="history-table-heading">
+                    <div>
+                        <h2>Status Change Records</h2>
+                        <p>Complete asset status change history</p>
+                    </div>
+
+                    <input type="text"
+                           id="historySearch"
+                           placeholder="Search history...">
+                </div>
+
+                <div class="table-responsive">
+                    <table class="history-table" id="historyTable">
+
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Asset Tag</th>
+                                <th>Asset Name</th>
+                                <th>Previous Status</th>
+                                <th>New Status</th>
+                                <th>Changed At</th>
+                                <th>Reason</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr th:each="history : ${historyList}">
+
+                                <td th:text="${history.id}"></td>
+
+                                <td th:text="${history.asset.assetTag}"></td>
+
+                                <td th:text="${history.asset.assetName}"></td>
+
+                                <td>
+                                    <span class="history-status previous-status"
+                                          th:text="${history.previousStatus != null ? history.previousStatus : 'New'}">
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="history-status"
+                                          th:classappend="${history.newStatus == 'Available'} ? ' history-available' :
+                                          (${history.newStatus == 'Assigned'} ? ' history-assigned' :
+                                          (${history.newStatus == 'Under Repair'} ? ' history-repair' :
+                                          (${history.newStatus == 'Retired'} ? ' history-retired' : ' history-lost')))"
+                                          th:text="${history.newStatus}">
+                                    </span>
+                                </td>
+
+                                <td th:text="${history.changedAt != null ? #temporals.format(history.changedAt, 'dd-MM-yyyy HH:mm') : '-'}"></td>
+
+                                <td th:text="${history.reason != null and !history.reason.isEmpty() ? history.reason : '-'}"></td>
+
+                                <td>
+                                    <div class="action-buttons">
+                                        <a th:href="@{/status-history/edit/{id}(id=${history.id})}"
+                                           class="edit-btn">Edit</a>
+
+                                        <a th:href="@{/status-history/delete/{id}(id=${history.id})}"
+                                           class="delete-btn"
+                                           onclick="return confirm('Delete this history record?')">
+                                            Delete
+                                        </a>
+                                    </div>
+                                </td>
+
+                            </tr>
+
+                            <tr th:if="${#lists.isEmpty(historyList)}">
+                                <td colspan="8" class="empty-message">
+                                    No status history records found.
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                    <p id="historyNoResults" class="no-results" hidden>
+                        No matching history records found.
+                    </p>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                AssetFlow | IT Asset Management System
+            </div>
+
+        </section>
+    </main>
+</div>
+
+<script th:src="@{/js/status-history.js}"></script>
+
+</body>
+</html>

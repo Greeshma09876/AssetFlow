@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AssetFlow | Employees</title>
+
+    <link rel="stylesheet" th:href="@{/css/asset-style.css}">
+    <link rel="stylesheet" th:href="@{/css/employee-style.css}">
+</head>
+
+<body>
+
+<div class="app-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <!-- BRAND -->
+        <div class="brand">
+            <div class="brand-icon">A</div>
+
+            <div class="brand-text">
+                <span>AssetFlow</span>
+                <small>IT ASSET MANAGEMENT</small>
+            </div>
+        </div>
+
+        <div class="menu-heading">MAIN MENU</div>
+
+        <!-- NAVIGATION -->
+        <nav class="sidebar-menu">
+
+            <a th:href="@{/dashboard}" class="menu-item">
+                <span>▦</span> Dashboard
+            </a>
+
+            <a th:href="@{/employees}" class="menu-item active">
+                <span>♙</span> Employees
+            </a>
+
+            <a th:href="@{/assets}" class="menu-item">
+                <span>▣</span> Assets
+            </a>
+
+            <a th:href="@{/categories}" class="menu-item">
+                <span>▤</span> Categories
+            </a>
+
+            <a th:href="@{/assignments}" class="menu-item">
+                <span>⇄</span> Assignments
+            </a>
+
+            <a th:href="@{/returns}" class="menu-item">
+                <span>↩</span> Returns
+            </a>
+
+            <a th:href="@{/maintenance}" class="menu-item">
+                <span>⚙</span> Maintenance
+            </a>
+
+            <a th:href="@{/status-history}" class="menu-item">
+                <span>◷</span> Status History
+            </a>
+
+        </nav>
+
+        <!-- SIDEBAR BOTTOM -->
+        <div class="sidebar-bottom">
+<br>
+            <div class="support-box">
+                <h4>Need Help?</h4>
+                <p>Manage your assets efficiently.</p>
+            </div>
+
+            <p class="sidebar-version">AssetFlow v1.0</p>
+
+        </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div>
+                <h3>Employee Management</h3>
+                <p>Manage company employees and their information.</p>
+            </div>
+
+            <div class="admin-profile">
+                <div class="avatar">A</div>
+
+                <div>
+                    <strong>Administrator</strong>
+                    <small>System Admin</small>
+                </div>
+            </div>
+
+        </header>
+
+        <!-- PAGE HEADING -->
+        <section class="page-heading">
+
+            <div>
+                <h1>Employee Directory</h1>
+                <p>View, register and manage company employees.</p>
+            </div>
+
+            <a th:href="@{/employees/add}" class="add-button">
+                + Add Employee
+            </a>
+
+        </section>
+
+        <!-- SUMMARY CARDS -->
+        <section class="stats-grid employee-stats">
+
+            <div class="stat-card blue">
+                <div class="stat-icon">♙</div>
+
+                <div>
+                    <p>Total Employees</p>
+                    <h2 th:text="${#lists.size(employees)}">0</h2>
+                    <small>Registered employees</small>
+                </div>
+            </div>
+
+            <div class="stat-card green">
+                <div class="stat-icon">✓</div>
+
+                <div>
+                    <p>Active Employees</p>
+                    <h2 th:text="${#lists.size(employees.?[status == 'Active'])}">0</h2>
+                    <small>Currently active</small>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- EMPLOYEE TABLE -->
+        <section class="inventory-card">
+
+            <div class="inventory-heading">
+                <div>
+                    <h2>All Employees</h2>
+                    <p>Complete employee information</p>
+                </div>
+            </div>
+
+            <!-- SEARCH -->
+            <div class="employee-filter">
+
+                <div class="employee-search">
+                    <span>⌕</span>
+
+                    <input type="text"
+                           id="employeeSearch"
+                           placeholder="Search by name, code, email or department...">
+                </div>
+
+            </div>
+
+            <!-- TABLE -->
+            <div class="table-responsive">
+
+                <table class="employee-table" id="employeeTable">
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>EMPLOYEE CODE</th>
+                            <th>EMPLOYEE DETAILS</th>
+                            <th>CONTACT</th>
+                            <th>DEPARTMENT</th>
+                            <th>DESIGNATION</th>
+                            <th>STATUS</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr th:each="employee : ${employees}">
+
+                            <td th:text="${employee.id}"></td>
+
+                            <td>
+                                <span class="employee-code"
+                                      th:text="${employee.employeeCode}">
+                                </span>
+                            </td>
+
+                            <td>
+                                <div class="employee-details">
+                                    <strong th:text="${employee.name}"></strong>
+                                    <small th:text="${employee.email}"></small>
+                                </div>
+                            </td>
+
+                            <td th:text="${employee.phone}"></td>
+
+                            <td th:text="${employee.department}"></td>
+
+                            <td th:text="${employee.designation}"></td>
+
+                            <td>
+                                <span class="employee-status"
+                                      th:classappend="${employee.status == 'Active'} ? ' active' : ' inactive'"
+                                      th:text="${employee.status}">
+                                </span>
+                            </td>
+
+                            <td>
+                                <div class="action-buttons">
+
+                                    <a th:href="@{/employees/edit/{id}(id=${employee.id})}"
+                                       class="edit-btn">
+                                        Edit
+                                    </a>
+
+                                    <a th:href="@{/employees/delete/{id}(id=${employee.id})}"
+                                       class="delete-btn"
+                                       onclick="return confirm('Are you sure you want to delete this employee?')">
+                                        Delete
+                                    </a>
+
+                                </div>
+                            </td>
+
+                        </tr>
+
+                        <tr th:if="${#lists.isEmpty(employees)}">
+                            <td colspan="8" class="empty-message">
+                                No employees registered yet.
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+                <p id="employeeNoResults" class="empty-message" hidden>
+                    No matching employees found.
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="page-footer">
+            © 2026 AssetFlow. IT Asset Management System.
+        </footer>
+
+    </main>
+
+</div>
+
+<script th:src="@{/js/employees.js}"></script>
+
+</body>
+</html>

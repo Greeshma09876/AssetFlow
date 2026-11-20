@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AssetFlow | Assets</title>
+
+    <link rel="stylesheet" th:href="@{/css/asset-style.css}">
+</head>
+
+<body>
+
+<div class="app-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <!-- BRAND -->
+        <div class="brand">
+            <div class="brand-icon">A</div>
+
+            <div class="brand-text">
+                <span>AssetFlow</span>
+                <small>IT ASSET MANAGEMENT</small>
+            </div>
+        </div>
+
+        <div class="menu-heading">MAIN MENU</div>
+
+        <!-- NAVIGATION -->
+        <nav class="sidebar-menu">
+
+            <a th:href="@{/dashboard}" class="menu-item">
+                <span>▦</span> Dashboard
+            </a>
+
+            <a th:href="@{/employees}" class="menu-item">
+                <span>♙</span> Employees
+            </a>
+
+            <a th:href="@{/assets}" class="menu-item active">
+                <span>▣</span> Assets
+            </a>
+
+            <a th:href="@{/categories}" class="menu-item">
+                <span>▤</span> Categories
+            </a>
+
+            <a th:href="@{/assignments}" class="menu-item">
+                <span>⇄</span> Assignments
+            </a>
+
+            <a th:href="@{/returns}" class="menu-item">
+                <span>↩</span> Returns
+            </a>
+
+            <a th:href="@{/maintenance}" class="menu-item">
+                <span>⚙</span> Maintenance
+            </a>
+
+            <a th:href="@{/status-history}" class="menu-item">
+                <span>◷</span> Status History
+            </a>
+
+        </nav>
+
+        <!-- BOTTOM SECTION -->
+        <div class="sidebar-bottom">
+<br>
+            <div class="support-box">
+                <h4>Need Help?</h4>
+                <p>Manage your assets efficiently.</p>
+            </div>
+
+            <p class="sidebar-version">AssetFlow v1.0</p>
+
+        </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div>
+                <h3>Asset Inventory</h3>
+                <p>Manage and monitor all company IT equipment.</p>
+            </div>
+
+            <div class="admin-profile">
+                <div class="avatar">A</div>
+
+                <div>
+                    <strong>Administrator</strong>
+                    <small>System Admin</small>
+                </div>
+            </div>
+
+        </header>
+
+        <!-- PAGE HEADING -->
+        <section class="page-heading">
+
+            <div>
+                <h1>Assets Inventory</h1>
+                <p>View, register, update and manage your IT assets.</p>
+            </div>
+
+            <a th:href="@{/assets/add}" class="add-button">
+                + Add New Asset
+            </a>
+
+        </section>
+
+        <!-- SUMMARY CARDS -->
+        <section class="stats-grid">
+
+            <div class="stat-card blue">
+                <div class="stat-icon">▣</div>
+                <div>
+                    <p>Total Assets</p>
+                    <h2 th:text="${#lists.size(assets)}">0</h2>
+                    <small>Registered equipment</small>
+                </div>
+            </div>
+
+            <div class="stat-card green">
+                <div class="stat-icon">✓</div>
+                <div>
+                    <p>Available</p>
+                    <h2 th:text="${#lists.size(assets.?[status == 'Available'])}">0</h2>
+                    <small>Ready for use</small>
+                </div>
+            </div>
+
+            <div class="stat-card orange">
+                <div class="stat-icon">⇄</div>
+                <div>
+                    <p>Assigned</p>
+                    <h2 th:text="${#lists.size(assets.?[status == 'Assigned'])}">0</h2>
+                    <small>Currently in use</small>
+                </div>
+            </div>
+
+            <div class="stat-card red">
+                <div class="stat-icon">⚙</div>
+                <div>
+                    <p>Under Repair</p>
+                    <h2 th:text="${#lists.size(assets.?[status == 'Under Repair'])}">0</h2>
+                    <small>Needs maintenance</small>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- INVENTORY TABLE -->
+        <section class="inventory-card">
+
+            <div class="inventory-heading">
+                <div>
+                    <h2>All Assets</h2>
+                    <p>Complete inventory information</p>
+                </div>
+            </div>
+
+            <!-- SEARCH AND FILTER -->
+            <div class="filter-bar">
+
+                <div class="search-box">
+                    <span>⌕</span>
+
+                    <input type="text"
+                           id="assetSearch"
+                           placeholder="Search by asset name, tag, brand...">
+                </div>
+
+                <select id="statusFilter">
+                    <option value="">All Status</option>
+                    <option value="Available">Available</option>
+                    <option value="Assigned">Assigned</option>
+                    <option value="Under Repair">Under Repair</option>
+                    <option value="Retired">Retired</option>
+                    <option value="Lost">Lost</option>
+                </select>
+
+            </div>
+
+            <!-- TABLE -->
+            <div class="table-responsive">
+
+                <table class="asset-table" id="assetTable">
+
+                    <thead>
+                        <tr>
+                            <th>ASSET TAG</th>
+                            <th>ASSET DETAILS</th>
+                            <th>CATEGORY</th>
+                            <th>BRAND / MODEL</th>
+                            <th>LOCATION</th>
+                            <th>STATUS</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr th:each="asset : ${assets}">
+
+                            <td>
+                                <span class="asset-tag"
+                                      th:text="${asset.assetTag}"></span>
+                            </td>
+
+                            <td>
+                                <div class="asset-details">
+                                    <strong th:text="${asset.assetName}"></strong>
+                                    <small th:text="${asset.serialNumber}"></small>
+                                </div>
+                            </td>
+
+                            <td th:text="${asset.category != null ?
+                                asset.category.categoryName : 'Uncategorized'}">
+                            </td>
+
+                            <td>
+                                <div class="asset-details">
+                                    <strong th:text="${asset.brand}"></strong>
+                                    <small th:text="${asset.model}"></small>
+                                </div>
+                            </td>
+
+                            <td th:text="${asset.location}"></td>
+
+                            <td>
+                                <span class="status-badge"
+                                      th:text="${asset.status}"
+                                      th:classappend="${asset.status == 'Available'} ? ' status-available' :
+                                      (${asset.status == 'Assigned'} ? ' status-assigned' :
+                                      (${asset.status == 'Under Repair'} ? ' status-repair' :
+                                      (${asset.status == 'Retired'} ? ' status-retired' : ' status-lost')))">
+                                </span>
+                            </td>
+
+                            <td>
+                                <div class="action-buttons">
+
+                                    <a th:href="@{/assets/edit/{id}(id=${asset.id})}"
+                                       class="edit-btn">
+                                        Edit
+                                    </a>
+
+                                    <a th:href="@{/assets/delete/{id}(id=${asset.id})}"
+                                       class="delete-btn"
+                                       onclick="return confirm('Delete this asset?')">
+                                        Delete
+                                    </a>
+
+                                </div>
+                            </td>
+
+                        </tr>
+
+                        <tr th:if="${#lists.isEmpty(assets)}">
+                            <td colspan="7" class="empty-message">
+                                No assets registered yet.
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+                <p id="noSearchResults" class="empty-message" hidden>
+                    No matching assets found.
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="page-footer">
+            © 2026 AssetFlow. IT Asset Management System.
+        </footer>
+
+    </main>
+
+</div>
+
+<script th:src="@{/js/assets.js}"></script>
+
+</body>
+</html>

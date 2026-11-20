@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Asset | AssetFlow</title>
+
+    <link rel="stylesheet" th:href="@{/css/asset-style.css}">
+    <link rel="stylesheet" th:href="@{/css/asset-form-style.css}">
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">A</div>
+            <div>
+                <h2>AssetFlow</h2>
+                <small>MANAGEMENT SYSTEM</small>
+            </div>
+        </div>
+
+        <p class="menu-title">MAIN MENU</p>
+
+        <nav class="sidebar-nav">
+            <a th:href="@{/dashboard}"><span>▦</span> Dashboard</a>
+            <a th:href="@{/employees}"><span>♙</span> Employees</a>
+            <a th:href="@{/assets}" class="active"><span>▣</span> Assets</a>
+            <a th:href="@{/categories}"><span>▤</span> Categories</a>
+            <a th:href="@{/assignments}"><span>⇄</span> Assignments</a>
+            <a th:href="@{/returns}"><span>↩</span> Returns</a>
+            <a th:href="@{/maintenance}"><span>⚙</span> Maintenance</a>
+            <a th:href="@{/status-history}"><span>◷</span> Status History</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <strong>AssetFlow Admin</strong>
+            <small>IT Asset Management</small>
+        </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content asset-form-page">
+
+        <header class="topbar">
+            <div>
+                <h3>Asset Management</h3>
+                <p>Manage your organization's equipment</p>
+            </div>
+
+            <div class="admin-profile">
+                <div class="avatar">A</div>
+                <div>
+                    <strong>Administrator</strong>
+                    <small>System Admin</small>
+                </div>
+            </div>
+        </header>
+
+        <!-- PAGE HEADING -->
+        <div class="form-page-heading">
+            <div>
+                <a th:href="@{/assets}" class="back-link">← Back to Assets</a>
+                <h1>Edit Asset</h1>
+                <p>Update the information of your existing asset.</p>
+            </div>
+
+            <span class="form-step edit-step">EDIT ASSET</span>
+        </div>
+
+        <!-- FORM CARD -->
+        <section class="asset-form-card">
+
+            <div class="form-card-heading">
+                <div>
+                    <h2>Asset Information</h2>
+                    <p>Modify the required equipment details.</p>
+                </div>
+                <span class="required-note">* Required fields</span>
+            </div>
+
+            <form th:action="@{/assets/update/{id}(id=${asset.id})}"
+                  th:object="${asset}"
+                  method="post">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Asset Tag <span>*</span></label>
+                        <input type="text"
+                               th:field="*{assetTag}"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Asset Name <span>*</span></label>
+                        <input type="text"
+                               th:field="*{assetName}"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Category <span>*</span></label>
+                        <select name="categoryId" required>
+                            <option value="">Select Category</option>
+                            <option th:each="category : ${categories}"
+                                    th:value="${category.id}"
+                                    th:text="${category.categoryName}"
+                                    th:selected="${asset.category != null and asset.category.id == category.id}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Brand</label>
+                        <input type="text" th:field="*{brand}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Model</label>
+                        <input type="text" th:field="*{model}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Serial Number</label>
+                        <input type="text" th:field="*{serialNumber}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Purchase Date</label>
+                        <input type="date" th:field="*{purchaseDate}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Warranty Expiry Date</label>
+                        <input type="date" th:field="*{warrantyExpiryDate}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Asset Status <span>*</span></label>
+                        <select th:field="*{status}" required>
+                            <option value="Available">Available</option>
+                            <option value="Assigned">Assigned</option>
+                            <option value="Under Repair">Under Repair</option>
+                            <option value="Retired">Retired</option>
+                            <option value="Lost">Lost</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" th:field="*{location}">
+                    </div>
+
+                </div>
+
+                <div class="form-divider"></div>
+
+                <div class="form-actions">
+                    <a th:href="@{/assets}" class="form-cancel-btn">
+                        Cancel
+                    </a>
+
+                    <button type="submit" class="form-submit-btn">
+                        Update Asset
+                    </button>
+                </div>
+
+            </form>
+
+        </section>
+
+        <footer class="page-footer">
+            © 2026 AssetFlow. All rights reserved.
+        </footer>
+
+    </main>
+</div>
+
+</body>
+</html>

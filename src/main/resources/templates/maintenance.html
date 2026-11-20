@@ -1,0 +1,337 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Maintenance | AssetFlow</title>
+
+    <link rel="stylesheet" th:href="@{/css/asset-style.css}">
+    <link rel="stylesheet" th:href="@{/css/maintenance-style.css}">
+</head>
+
+<body>
+
+<div class="app-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">A</div>
+
+            <div class="brand-text">
+                <span>AssetFlow</span>
+                <small>IT ASSET MANAGEMENT</small>
+            </div>
+        </div>
+
+        <div class="menu-heading">MAIN MENU</div>
+
+        <nav class="sidebar-menu">
+
+            <a th:href="@{/dashboard}" class="menu-item">
+                <span>▦</span> Dashboard
+            </a>
+
+            <a th:href="@{/employees}" class="menu-item">
+                <span>♙</span> Employees
+            </a>
+
+            <a th:href="@{/assets}" class="menu-item">
+                <span>▣</span> Assets
+            </a>
+
+            <a th:href="@{/categories}" class="menu-item">
+                <span>▤</span> Categories
+            </a>
+
+            <a th:href="@{/assignments}" class="menu-item">
+                <span>⇄</span> Assignments
+            </a>
+
+            <a th:href="@{/returns}" class="menu-item">
+                <span>↩</span> Returns
+            </a>
+
+            <a th:href="@{/maintenance}" class="menu-item active">
+                <span>⚙</span> Maintenance
+            </a>
+
+            <a th:href="@{/status-history}" class="menu-item">
+                <span>◷</span> Status History
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="support-box">
+                <h4>Need Help?</h4>
+                <p>Manage your assets efficiently.</p>
+            </div>
+
+            <p class="sidebar-version">AssetFlow v1.0</p>
+
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <h3>Asset Management</h3>
+                <p>Manage your organization's IT equipment</p>
+            </div>
+
+            <div class="admin-profile">
+                <div class="admin-avatar">A</div>
+                <span>Administrator</span>
+            </div>
+
+        </header>
+
+
+        <section class="page-content">
+
+            <!-- Page Heading -->
+            <div class="page-heading">
+
+                <div>
+                    <h1>Maintenance & Repair</h1>
+                    <p>Monitor asset issues, repairs and maintenance activities</p>
+                </div>
+
+                <a th:href="@{/maintenance/add}" class="add-button">
+                    + Add Maintenance Record
+                </a>
+
+            </div>
+
+
+            <!-- Summary Cards -->
+            <div class="maintenance-stats">
+
+                <div class="maintenance-stat-card">
+
+                    <div class="maintenance-stat-icon">⚙</div>
+
+                    <div>
+                        <p>Total Records</p>
+                        <h2 th:text="${#lists.size(maintenanceRecords)}">0</h2>
+                    </div>
+
+                </div>
+
+
+                <div class="maintenance-stat-card">
+
+                    <div class="maintenance-stat-icon pending-icon">◷</div>
+
+                    <div>
+                        <p>Pending</p>
+
+                        <h2 th:text="${#lists.size(maintenanceRecords.?[maintenanceStatus == 'Pending'])}">
+                            0
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                <div class="maintenance-stat-card">
+
+                    <div class="maintenance-stat-icon progress-icon">↻</div>
+
+                    <div>
+                        <p>In Progress</p>
+
+                        <h2 th:text="${#lists.size(maintenanceRecords.?[maintenanceStatus == 'In Progress'])}">
+                            0
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                <div class="maintenance-stat-card">
+
+                    <div class="maintenance-stat-icon completed-icon">✓</div>
+
+                    <div>
+                        <p>Completed</p>
+
+                        <h2 th:text="${#lists.size(maintenanceRecords.?[maintenanceStatus == 'Completed'])}">
+                            0
+                        </h2>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Maintenance Table -->
+            <div class="maintenance-table-card">
+
+                <div class="maintenance-table-heading">
+
+                    <div>
+                        <h2>Maintenance Records</h2>
+                        <p>View and manage all repair activities</p>
+                    </div>
+
+                    <input type="text"
+                           id="maintenanceSearch"
+                           placeholder="Search maintenance...">
+
+                </div>
+
+
+                <div class="table-responsive">
+
+                    <table class="maintenance-table" id="maintenanceTable">
+
+                        <thead>
+
+                            <tr>
+                                <th>ID</th>
+                                <th>Asset</th>
+                                <th>Issue</th>
+                                <th>Reported Date</th>
+                                <th>Repair Date</th>
+                                <th>Technician</th>
+                                <th>Cost</th>
+                                <th>Status</th>
+                                <th>Remarks</th>
+                                <th>Actions</th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr th:each="record : ${maintenanceRecords}">
+
+                                <td th:text="${record.id}"></td>
+
+
+                                <td>
+
+                                    <div class="maintenance-details">
+
+                                        <strong th:text="${record.asset.assetName}"></strong>
+
+                                        <small th:text="${record.asset.assetTag}"></small>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td th:text="${record.issueDescription}"></td>
+
+
+                                <td th:text="${record.reportedDate}"></td>
+
+
+                                <td th:text="${record.repairDate != null ? record.repairDate : '-'}"></td>
+
+
+                                <td th:text="${record.technicianName != null and !record.technicianName.isEmpty() ? record.technicianName : '-'}"></td>
+
+
+                                <td th:text="${record.repairCost != null ? '₹ ' + record.repairCost : '-'}"></td>
+
+
+                                <td>
+
+                                    <span class="maintenance-status"
+                                          th:classappend="${record.maintenanceStatus == 'Completed'} ? ' maintenance-completed' :
+                                          (${record.maintenanceStatus == 'In Progress'} ? ' maintenance-progress' : ' maintenance-pending')"
+                                          th:text="${record.maintenanceStatus}">
+                                    </span>
+
+                                </td>
+
+
+                                <td th:text="${record.remarks != null and !record.remarks.isEmpty() ? record.remarks : '-'}"></td>
+
+
+                                <!-- Actions -->
+                                <td>
+
+                                    <div class="action-buttons">
+
+                                        <a th:href="@{/maintenance/edit/{id}(id=${record.id})}"
+                                           class="edit-btn">
+                                            Edit
+                                        </a>
+
+
+                                        <!-- DELETE USING POST -->
+                                        <form th:action="@{/maintenance/delete/{id}(id=${record.id})}"
+                                              method="post"
+                                              style="display:inline;">
+
+                                            <button type="submit"
+                                                    class="delete-btn"
+                                                    onclick="return confirm('Are you sure you want to delete this maintenance record?')">
+                                                Delete
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- Empty Records -->
+                            <tr th:if="${#lists.isEmpty(maintenanceRecords)}">
+
+                                <td colspan="10" class="empty-message">
+                                    No maintenance records available.
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+
+                    <p id="maintenanceNoResults" class="no-results" hidden>
+                        No matching maintenance records found.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Footer -->
+            <div class="page-footer">
+                AssetFlow | IT Asset Management System
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script th:src="@{/js/maintenance.js}"></script>
+
+</body>
+</html>

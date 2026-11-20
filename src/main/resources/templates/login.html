@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | AssetFlow</title>
+
+    <link rel="stylesheet" th:href="@{/css/login-style.css}">
+</head>
+<body>
+
+<div class="login-container">
+
+    <!-- LEFT BRANDING SECTION -->
+    <section class="brand-section">
+
+        <div class="brand-logo">
+            <div class="logo-icon">A</div>
+            <div>
+                <h2>AssetFlow</h2>
+                <span>IT ASSET MANAGEMENT</span>
+            </div>
+        </div>
+
+        <div class="brand-content">
+            <span class="eyebrow">ENTERPRISE ASSET MANAGEMENT</span>
+
+            <h1>Manage your IT assets.<br>
+                <span>Stay in control.</span>
+            </h1>
+
+            <p>
+                A centralized platform to manage company equipment,
+                employee assignments, maintenance and asset lifecycle
+                records efficiently.
+            </p>
+
+            <div class="feature-list">
+
+                <div class="feature-item">
+                    <div class="feature-icon">▣</div>
+                    <div>
+                        <h3>Smart Asset Tracking</h3>
+                        <p>Monitor and manage your IT inventory.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">⇄</div>
+                    <div>
+                        <h3>Equipment Management</h3>
+                        <p>Manage assignments and returns easily.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">⌑</div>
+                    <div>
+                        <h3>Secure Access</h3>
+                        <p>Role-based access for authorized users.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="brand-footer">
+            © 2026 AssetFlow. All rights reserved.
+        </div>
+
+    </section>
+
+
+    <!-- RIGHT LOGIN SECTION -->
+    <section class="form-section">
+
+        <div class="login-card">
+
+            <div class="mobile-logo">
+                <div class="logo-icon">A</div>
+                <h2>AssetFlow</h2>
+            </div>
+
+            <div class="form-heading">
+                <span class="welcome-label">WELCOME BACK</span>
+                <h1>Sign in to your account</h1>
+                <p>Enter your credentials to access AssetFlow.</p>
+            </div>
+
+            <!-- Login Error -->
+            <div class="alert error-alert"
+                 th:if="${param.error}">
+                Invalid username or password. Please try again.
+            </div>
+
+            <!-- Logout Message -->
+            <div class="alert success-alert"
+                 th:if="${param.logout}">
+                You have successfully logged out.
+            </div>
+
+            <form th:action="@{/login}" method="post">
+
+                <!-- CSRF protection is automatically included by Thymeleaf
+                     when Spring Security is configured with its CSRF support. -->
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+
+                    <input type="text"
+                           id="username"
+                           name="username"
+                           placeholder="Enter your username"
+                           autocomplete="username"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+
+                    <input type="password"
+                           id="password"
+                           name="password"
+                           placeholder="Enter your password"
+                           autocomplete="current-password"
+                           required>
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-label">
+                        <input type="checkbox" name="remember-me">
+                        <span>Remember me</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="login-button">
+                    Sign In
+                    <span>→</span>
+                </button>
+
+            </form>
+
+            <div class="security-note">
+                <span>▣</span>
+                Authorized personnel only
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+</body>
+</html>

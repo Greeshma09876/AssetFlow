@@ -1,0 +1,428 @@
+
+/* =====================================================
+   ASSETFLOW - MAINTENANCE MODULE
+   Premium Dark Blue Enterprise Theme
+===================================================== */
+
+/* MAINTENANCE SUMMARY */
+
+.maintenance-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.maintenance-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: linear-gradient(135deg, #192D49, #142238);
+    padding: 20px;
+    border: 1px solid #304967;
+    border-radius: 12px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.18);
+    transition: border-color 0.25s ease;
+}
+
+.maintenance-stat-card:hover {
+    border-color: #3978F6;
+}
+
+.maintenance-stat-icon {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: rgba(57, 120, 246, 0.18);
+    color: #75A5FF;
+    border: 1px solid rgba(57, 120, 246, 0.25);
+    font-size: 22px;
+}
+
+.pending-icon {
+    background: rgba(217, 154, 50, 0.16);
+    color: #F3C36F;
+    border-color: rgba(217, 154, 50, 0.25);
+}
+
+.progress-icon {
+    background: rgba(57, 120, 246, 0.18);
+    color: #75A5FF;
+    border-color: rgba(57, 120, 246, 0.25);
+}
+
+.completed-icon {
+    background: rgba(21, 155, 114, 0.16);
+    color: #55D6A5;
+    border-color: rgba(21, 155, 114, 0.25);
+}
+
+.maintenance-stat-card p {
+    margin: 0 0 7px;
+    color: #AFC1D8;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.maintenance-stat-card h2 {
+    margin: 0;
+    color: #FFFFFF;
+    font-size: 24px;
+    font-weight: 750;
+}
+
+/* MAINTENANCE TABLE */
+
+.maintenance-table-card {
+    background: #192941;
+    padding: 22px;
+    border: 1px solid #2B3D56;
+    border-radius: 12px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.16);
+}
+
+.maintenance-table-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.maintenance-table-heading h2 {
+    margin: 0 0 6px;
+    color: #FFFFFF;
+    font-size: 18px;
+}
+
+.maintenance-table-heading p {
+    margin: 0;
+    color: #AFC1D8;
+    font-size: 13px;
+}
+
+#maintenanceSearch {
+    width: 230px;
+    padding: 11px 14px;
+    border: 1px solid #3A506D;
+    border-radius: 8px;
+    outline: none;
+    font-size: 13px;
+    background: #101B2D;
+    color: #FFFFFF;
+}
+
+#maintenanceSearch::placeholder {
+    color: #91A3BC;
+}
+
+#maintenanceSearch:focus {
+    border-color: #3978F6;
+}
+
+.maintenance-table {
+    width: 100%;
+    min-width: 1050px;
+    border-collapse: collapse;
+    background: #142238;
+}
+
+.maintenance-table th {
+    background: #0B1729;
+    color: #AFC1D8;
+    padding: 14px 12px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 700;
+    border-bottom: 1px solid #304967;
+    white-space: nowrap;
+}
+
+.maintenance-table td {
+    padding: 14px 12px;
+    border-bottom: 1px solid #2B3D56;
+    color: #D5DFED;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+.maintenance-table tbody tr {
+    background: #142238;
+    transition: background 0.2s ease;
+}
+
+.maintenance-table tbody tr:nth-child(even) {
+    background: #192B43;
+}
+
+.maintenance-table tbody tr:hover {
+    background: #263D5B;
+}
+
+/* ASSET DETAILS */
+
+.maintenance-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.maintenance-details strong {
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.maintenance-details small {
+    color: #AFC1D8;
+    font-size: 11px;
+}
+
+/* MAINTENANCE STATUS */
+
+.maintenance-status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.maintenance-pending {
+    background: rgba(217, 154, 50, 0.18);
+    color: #F3C36F;
+}
+
+.maintenance-progress {
+    background: rgba(57, 120, 246, 0.18);
+    color: #82ACFF;
+}
+
+.maintenance-completed {
+    background: rgba(21, 155, 114, 0.18);
+    color: #55D6A5;
+}
+
+/* EMPTY AND SEARCH MESSAGES */
+
+.empty-message,
+.no-results {
+    padding: 25px;
+    text-align: center;
+    color: #AFC1D8;
+}
+
+/* ACTION BUTTONS */
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.edit-btn,
+.delete-btn {
+    display: inline-block;
+    padding: 7px 11px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.edit-btn {
+    background: rgba(57, 120, 246, 0.18);
+    color: #82ACFF;
+    border: 1px solid rgba(57, 120, 246, 0.3);
+}
+
+.edit-btn:hover {
+    background: #285FC7;
+    color: #FFFFFF;
+}
+
+.delete-btn {
+    background: rgba(220, 70, 70, 0.14);
+    color: #FF8585;
+    border: 1px solid rgba(220, 70, 70, 0.25);
+}
+
+.delete-btn:hover {
+    background: #B93636;
+    color: #FFFFFF;
+}
+
+/* =====================================================
+   MAINTENANCE FORM
+===================================================== */
+
+.maintenance-form-card {
+    max-width: 900px;
+    padding: 28px;
+    background: #192941;
+    border: 1px solid #2B3D56;
+    border-radius: 12px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.16);
+}
+
+.form-card-heading {
+    margin-bottom: 25px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #304967;
+}
+
+.form-card-heading h2 {
+    margin: 0 0 7px;
+    color: #FFFFFF;
+    font-size: 19px;
+}
+
+.form-card-heading p {
+    margin: 0;
+    color: #AFC1D8;
+    font-size: 13px;
+}
+
+.maintenance-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    color: #D5DFED;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.form-group label span {
+    color: #FF8585;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 13px;
+    border: 1px solid #3A506D;
+    border-radius: 8px;
+    background: #101B2D;
+    color: #FFFFFF;
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #3978F6;
+}
+
+.form-group input[readonly] {
+    background: #26364D;
+    color: #B8C8DC;
+}
+
+.form-group select option {
+    background: #142238;
+    color: #FFFFFF;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.maintenance-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #304967;
+}
+
+.cancel-button,
+.save-button {
+    display: inline-block;
+    padding: 11px 20px;
+    border: none;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.cancel-button {
+    background: #263B59;
+    color: #D5DFED;
+}
+
+.cancel-button:hover {
+    background: #344D6D;
+}
+
+.save-button {
+    background: #3978F6;
+    color: #FFFFFF;
+}
+
+.save-button:hover {
+    background: #255FCC;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+    .maintenance-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+    .maintenance-table-heading {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    #maintenanceSearch {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .maintenance-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full-width {
+        grid-column: auto;
+    }
+
+    .maintenance-form-card {
+        padding: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .maintenance-stats {
+        grid-template-columns: 1fr;
+    }
+}

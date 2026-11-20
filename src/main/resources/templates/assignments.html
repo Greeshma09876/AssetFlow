@@ -1,0 +1,354 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignments | AssetFlow</title>
+
+    <link rel="stylesheet" th:href="@{/css/asset-style.css}">
+    <link rel="stylesheet" th:href="@{/css/assignment-style.css}">
+</head>
+
+<body>
+
+<div class="app-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <!-- BRAND -->
+        <div class="brand">
+            <div class="brand-icon">A</div>
+            <div class="brand-text">
+                <span>AssetFlow</span>
+                <small>IT ASSET MANAGEMENT</small>
+            </div>
+        </div>
+
+        <div class="menu-heading">MAIN MENU</div>
+
+        <nav class="sidebar-menu">
+
+            <a th:href="@{/dashboard}" class="menu-item">
+                <span>▦</span> Dashboard
+            </a>
+
+            <a th:href="@{/employees}" class="menu-item">
+                <span>♙</span> Employees
+            </a>
+
+            <a th:href="@{/assets}" class="menu-item">
+                <span>▣</span> Assets
+            </a>
+
+            <a th:href="@{/categories}" class="menu-item">
+                <span>▤</span> Categories
+            </a>
+
+            <a th:href="@{/assignments}" class="menu-item active">
+                <span>⇄</span> Assignments
+            </a>
+
+            <a th:href="@{/returns}" class="menu-item">
+                <span>↩</span> Returns
+            </a>
+
+            <a th:href="@{/maintenance}" class="menu-item">
+                <span>⚙</span> Maintenance
+            </a>
+
+            <a th:href="@{/status-history}" class="menu-item">
+                <span>◷</span> Status History
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="support-box">
+                <h4>Need Help?</h4>
+                <p>Manage your assets efficiently.</p>
+            </div>
+
+            <p class="sidebar-version">AssetFlow v1.0</p>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div>
+                <h3>Assignment Management</h3>
+                <p>Manage and track employee asset assignments</p>
+            </div>
+
+            <div class="admin-profile">
+                <div class="admin-avatar">A</div>
+                <div>
+                    <strong>Administrator</strong>
+                    <small>System Admin</small>
+                </div>
+            </div>
+
+        </header>
+
+
+        <!-- PAGE CONTENT -->
+        <section class="page-content">
+
+            <!-- SUCCESS / ERROR MESSAGES -->
+
+            <div th:if="${successMessage}"
+                 style="padding: 14px 18px;
+                        margin-bottom: 20px;
+                        border-radius: 8px;
+                        background: #d1fae5;
+                        color: #065f46;
+                        border: 1px solid #6ee7b7;"
+                 th:text="${successMessage}">
+            </div>
+
+            <div th:if="${errorMessage}"
+                 style="padding: 14px 18px;
+                        margin-bottom: 20px;
+                        border-radius: 8px;
+                        background: #fee2e2;
+                        color: #991b1b;
+                        border: 1px solid #fca5a5;"
+                 th:text="${errorMessage}">
+            </div>
+
+
+            <!-- PAGE HEADING -->
+            <div class="page-heading">
+
+                <div>
+                    <h2>Asset Assignments</h2>
+                    <p>Track and manage equipment assigned to employees.</p>
+                </div>
+
+                <a th:href="@{/assignments/add}" class="add-button">
+                    + Assign New Asset
+                </a>
+
+            </div>
+
+
+            <!-- SUMMARY CARDS -->
+            <div class="assignment-stats">
+
+                <div class="assignment-stat-card">
+
+                    <div class="stat-icon total-icon">⇄</div>
+
+                    <div>
+                        <p>Total Assignments</p>
+                        <h3 th:text="${#lists.size(assignments)}">0</h3>
+                    </div>
+
+                </div>
+
+
+                <div class="assignment-stat-card">
+
+                    <div class="stat-icon assigned-icon">✓</div>
+
+                    <div>
+                        <p>Currently Assigned</p>
+
+                        <h3 th:text="${#lists.size(assignments.?[status == 'Assigned'])}">
+                            0
+                        </h3>
+                    </div>
+
+                </div>
+
+
+                <div class="assignment-stat-card">
+
+                    <div class="stat-icon returned-icon">↩</div>
+
+                    <div>
+                        <p>Returned</p>
+
+                        <h3 th:text="${#lists.size(assignments.?[status == 'Returned'])}">
+                            0
+                        </h3>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ASSIGNMENT TABLE -->
+            <div class="assignment-table-card">
+
+                <div class="assignment-table-heading">
+
+                    <div>
+                        <h3>Assignment Records</h3>
+                        <p>View and manage all employee asset assignments.</p>
+                    </div>
+
+                    <input type="text"
+                           id="assignmentSearch"
+                           placeholder="Search assignments...">
+
+                </div>
+
+
+                <div class="table-responsive">
+
+                    <table class="assignment-table">
+
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Employee</th>
+                                <th>Asset Details</th>
+                                <th>Assignment Date</th>
+                                <th>Expected Return</th>
+                                <th>Status</th>
+                                <th>Remarks</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+
+                        <tbody id="assignmentTable">
+
+                            <tr th:each="assignment : ${assignments}">
+
+                                <td>
+                                    <span class="assignment-id"
+                                          th:text="${assignment.id}">
+                                    </span>
+                                </td>
+
+
+                                <td>
+                                    <div class="assignment-details">
+
+                                        <strong th:text="${assignment.employee.name}">
+                                        </strong>
+
+                                        <small th:text="${assignment.employee.employeeCode}">
+                                        </small>
+
+                                    </div>
+                                </td>
+
+
+                                <td>
+                                    <div class="assignment-details">
+
+                                        <strong th:text="${assignment.asset.assetName}">
+                                        </strong>
+
+                                        <small th:text="${assignment.asset.assetTag}">
+                                        </small>
+
+                                    </div>
+                                </td>
+
+
+                                <td th:text="${assignment.assignmentDate}">
+                                </td>
+
+
+                                <td th:text="${assignment.expectedReturnDate != null ? assignment.expectedReturnDate : 'Not specified'}">
+                                </td>
+
+
+                                <td>
+
+                                    <span class="assignment-status"
+                                          th:classappend="${assignment.status == 'Assigned'} ? ' status-assigned' :
+                                                          (${assignment.status == 'Returned'} ? ' status-returned' : ' status-other')"
+                                          th:text="${assignment.status}">
+                                    </span>
+
+                                </td>
+
+
+                                <td class="remarks-cell"
+                                    th:text="${assignment.remarks != null and !assignment.remarks.isEmpty() ? assignment.remarks : '-'}">
+                                </td>
+
+
+                                <!-- ACTIONS -->
+                                <td>
+
+                                    <div class="assignment-actions">
+
+                                        <!-- EDIT -->
+                                        <a th:if="${assignment.status == 'Assigned'}"
+                                           th:href="@{/assignments/edit/{id}(id=${assignment.id})}"
+                                           class="assignment-edit">
+                                            Edit
+                                        </a>
+
+
+                                        <!-- DELETE - POST METHOD -->
+                                        <form th:action="@{/assignments/delete/{id}(id=${assignment.id})}"
+                                              method="post"
+                                              style="display: inline;">
+
+                                            <button type="submit"
+                                                    class="assignment-delete"
+                                                    onclick="return confirm('Are you sure you want to delete this assignment?')">
+                                                Delete
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- EMPTY MESSAGE -->
+                            <tr th:if="${#lists.isEmpty(assignments)}">
+
+                                <td colspan="8" class="empty-message">
+                                    No assignment records found. Assign an asset to get started.
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+
+                    <p id="assignmentNoResults" class="no-results" hidden>
+                        No matching assignments found.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- JAVASCRIPT -->
+<script th:src="@{/js/assignments.js}"></script>
+
+</body>
+</html>

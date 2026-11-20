@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Assign Asset | AssetFlow</title>
+
+    <link rel="stylesheet" th:href="@{/css/asset-style.css}">
+    <link rel="stylesheet" th:href="@{/css/assignment-form-style.css}">
+</head>
+
+<body>
+
+<div class="app-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+            <div class="brand-icon">A</div>
+            <span>AssetFlow</span>
+        </div>
+
+        <p class="sidebar-label">MAIN MENU</p>
+
+        <nav class="sidebar-nav">
+
+            <a th:href="@{/dashboard}">
+                <span>▦</span> Dashboard
+            </a>
+
+            <a th:href="@{/employees}">
+                <span>♙</span> Employees
+            </a>
+
+            <a th:href="@{/assets}">
+                <span>▣</span> Assets
+            </a>
+
+            <a th:href="@{/categories}">
+                <span>▤</span> Categories
+            </a>
+
+            <a th:href="@{/assignments}" class="active">
+                <span>⇄</span> Assignments
+            </a>
+
+            <a th:href="@{/returns}">
+                <span>↩</span> Returns
+            </a>
+
+            <a th:href="@{/maintenance}">
+                <span>⚙</span> Maintenance
+            </a>
+
+            <a th:href="@{/status-history}">
+                <span>◷</span> Status History
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div>
+                <h3>Asset Management</h3>
+                <p>Manage your organization's IT equipment</p>
+            </div>
+
+            <div class="admin-profile">
+                <div class="admin-avatar">A</div>
+                <div>
+                    <strong>Administrator</strong>
+                    <small>System Admin</small>
+                </div>
+            </div>
+
+        </header>
+
+        <!-- PAGE CONTENT -->
+        <section class="page-content">
+
+            <div class="page-heading">
+
+                <div>
+                    <h2>Assign Asset</h2>
+                    <p>Assign an available asset to an employee.</p>
+                </div>
+
+                <a th:href="@{/assignments}" class="back-button">
+                    ← Back to Assignments
+                </a>
+
+            </div>
+
+            <div class="assignment-form-card">
+
+                <div class="form-card-heading">
+                    <div>
+                        <h3>Assignment Details</h3>
+                        <p>Enter the asset handover information below.</p>
+                    </div>
+                    <span class="form-icon">⇄</span>
+                </div>
+
+                <form th:action="@{/assignments/save}"
+                      th:object="${assignment}"
+                      method="post">
+
+                    <div class="form-grid">
+
+                        <div class="form-group full-width">
+                            <label>Select Employee <span>*</span></label>
+
+                            <select name="employeeId" required>
+                                <option value="">Choose an employee</option>
+
+                                <option th:each="employee : ${employees}"
+                                        th:value="${employee.id}"
+                                        th:text="${employee.employeeCode + ' - ' + employee.name}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>Select Available Asset <span>*</span></label>
+
+                            <select name="assetId" required>
+                                <option value="">Choose an available asset</option>
+
+                                <option th:each="asset : ${assets}"
+                                        th:if="${asset.status == 'Available'}"
+                                        th:value="${asset.id}"
+                                        th:text="${asset.assetTag + ' - ' + asset.assetName}">
+                                </option>
+                            </select>
+
+                            <small>Only assets with Available status are displayed.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Assignment Date <span>*</span></label>
+
+                            <input type="date"
+                                   th:field="*{assignmentDate}"
+                                   required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Expected Return Date</label>
+
+                            <input type="date"
+                                   th:field="*{expectedReturnDate}">
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>Remarks</label>
+
+                            <textarea th:field="*{remarks}"
+                                      rows="4"
+                                      placeholder="Enter handover details or additional remarks">
+                            </textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="form-actions">
+
+                        <a th:href="@{/assignments}" class="cancel-button">
+                            Cancel
+                        </a>
+
+                        <button type="submit" class="save-button">
+                            Assign Asset
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>

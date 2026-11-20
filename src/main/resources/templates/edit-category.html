@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Category | AssetFlow</title>
+
+    <link rel="stylesheet" th:href="@{/css/asset-style.css}">
+    <link rel="stylesheet" th:href="@{/css/category-style.css}">
+</head>
+<body>
+
+<div class="app-container">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">A</div>
+            <div>
+                <h2>AssetFlow</h2>
+                <small>MANAGEMENT SYSTEM</small>
+            </div>
+        </div>
+
+        <p class="menu-title">MAIN MENU</p>
+
+        <nav class="sidebar-nav">
+            <a th:href="@{/dashboard}"><span>▦</span> Dashboard</a>
+            <a th:href="@{/employees}"><span>♙</span> Employees</a>
+            <a th:href="@{/assets}"><span>▣</span> Assets</a>
+            <a th:href="@{/categories}" class="active"><span>▤</span> Categories</a>
+            <a th:href="@{/assignments}"><span>⇄</span> Assignments</a>
+            <a th:href="@{/returns}"><span>↩</span> Returns</a>
+            <a th:href="@{/maintenance}"><span>⚙</span> Maintenance</a>
+            <a th:href="@{/status-history}"><span>◷</span> Status History</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <strong>AssetFlow Admin</strong>
+            <small>IT Asset Management</small>
+        </div>
+    </aside>
+
+    <main class="main-content category-page">
+
+        <header class="topbar">
+            <div>
+                <h3>Category Management</h3>
+                <p>Organize your company equipment</p>
+            </div>
+
+            <div class="admin-profile">
+                <div class="avatar">A</div>
+                <div>
+                    <strong>Administrator</strong>
+                    <small>System Admin</small>
+                </div>
+            </div>
+        </header>
+
+        <div class="category-form-heading">
+            <div>
+                <a th:href="@{/categories}" class="back-link">← Back to Categories</a>
+                <h1>Edit Category</h1>
+                <p>Update the selected asset category details.</p>
+            </div>
+            <span class="category-form-label edit-category-label">EDIT CATEGORY</span>
+        </div>
+
+        <section class="category-form-card">
+
+            <div class="category-form-title">
+                <h2>Category Information</h2>
+                <p>Modify the category details below.</p>
+            </div>
+
+            <form th:action="@{/categories/update/{id}(id=${category.id})}"
+                  th:object="${category}"
+                  method="post">
+
+                <div class="category-form-group">
+                    <label>Category Name <span>*</span></label>
+                    <input type="text"
+                           th:field="*{categoryName}"
+                           required>
+                </div>
+
+                <div class="category-form-group">
+                    <label>Description</label>
+                    <textarea th:field="*{description}"
+                              rows="5"
+                              placeholder="Enter category description..."></textarea>
+                </div>
+
+                <div class="category-form-divider"></div>
+
+                <div class="category-form-actions">
+                    <a th:href="@{/categories}" class="category-cancel-btn">
+                        Cancel
+                    </a>
+
+                    <button type="submit" class="category-submit-btn">
+                        Update Category
+                    </button>
+                </div>
+
+            </form>
+        </section>
+
+        <footer class="page-footer">
+            © 2026 AssetFlow. All rights reserved.
+        </footer>
+
+    </main>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Asset Return | AssetFlow</title>
+
+    <link rel="stylesheet" th:href="@{/css/asset-style.css}">
+    <link rel="stylesheet" th:href="@{/css/return-style.css}">
+</head>
+<body>
+
+<div class="app-container">
+
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-icon">A</div>
+            <span>AssetFlow</span>
+        </div>
+
+        <p class="sidebar-label">MAIN MENU</p>
+
+        <nav class="sidebar-nav">
+            <a th:href="@{/dashboard}"><span>▦</span> Dashboard</a>
+            <a th:href="@{/employees}"><span>♙</span> Employees</a>
+            <a th:href="@{/assets}"><span>▣</span> Assets</a>
+            <a th:href="@{/categories}"><span>▤</span> Categories</a>
+            <a th:href="@{/assignments}"><span>⇄</span> Assignments</a>
+            <a th:href="@{/returns}" class="active"><span>↩</span> Returns</a>
+            <a th:href="@{/maintenance}"><span>⚙</span> Maintenance</a>
+            <a th:href="@{/status-history}"><span>◷</span> Status History</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <h3>Asset Management</h3>
+                <p>Manage your organization's IT equipment</p>
+            </div>
+
+            <div class="admin-profile">
+                <div class="admin-avatar">A</div>
+                <span>Administrator</span>
+            </div>
+        </header>
+
+        <section class="page-content">
+
+            <div class="page-heading">
+                <div>
+                    <h1>Edit Asset Return</h1>
+                    <p>Update the returned equipment information</p>
+                </div>
+            </div>
+
+            <div class="return-form-card">
+
+                <div class="form-card-heading">
+                    <h2>Return Information</h2>
+                    <p>Review and update the return details.</p>
+                </div>
+
+                <form th:action="@{/returns/update/{id}(id=${assetReturn.id})}"
+                      th:object="${assetReturn}"
+                      method="post"
+                      class="return-form">
+
+                    <div class="return-form-grid">
+
+                        <div class="form-group">
+                            <label>Employee</label>
+                            <input type="text"
+                                   th:value="${assetReturn.assignment.employee.name}"
+                                   readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Asset</label>
+                            <input type="text"
+                                   th:value="${assetReturn.assignment.asset.assetName}"
+                                   readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Return Date <span>*</span></label>
+                            <input type="date" th:field="*{returnDate}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Asset Condition <span>*</span></label>
+
+                            <select th:field="*{assetCondition}" required>
+                                <option value="Good">Good</option>
+                                <option value="Damaged">Damaged</option>
+                                <option value="Needs Repair">Needs Repair</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>Accessories Received</label>
+                            <input type="text" th:field="*{accessoriesReceived}">
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>Remarks</label>
+                            <textarea th:field="*{remarks}"
+                                      rows="4"></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="return-form-actions">
+                        <a th:href="@{/returns}" class="cancel-button">Cancel</a>
+                        <button type="submit" class="save-button">Update Return</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+    </main>
+</div>
+
+</body>
+</html>

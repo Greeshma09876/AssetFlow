@@ -1,0 +1,479 @@
+
+/* ==========================================
+   ASSETFLOW - ASSIGNMENT MANAGEMENT
+   PREMIUM NAVY BLUE ENTERPRISE THEME
+========================================== */
+
+/* ASSIGNMENT MODULE */
+
+.assignment-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+/* SUMMARY CARDS */
+
+.assignment-stat-card {
+    background: #192941;
+    border: 1px solid #2B3D56;
+    color: #FFFFFF;
+}
+
+.assignment-stat-card p {
+    color: #B8C8DC;
+    font-size: 12px;
+    margin-bottom: 7px;
+}
+
+.assignment-stat-card h3 {
+    color: #FFFFFF;
+    font-size: 25px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.total-icon {
+    background: rgba(57,120,246,0.18);
+    color: #8DB4FF;
+}
+
+.assigned-icon {
+    background: rgba(21,155,114,0.18);
+    color: #55D6A5;
+}
+
+.returned-icon {
+    background: rgba(217,154,50,0.18);
+    color: #F3C36F;
+}
+
+
+
+/* ASSIGNMENT TABLE CARD */
+
+.assignment-table-card {
+    background: #192941;
+    border: 1px solid #2B3D56;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+}
+
+/* TABLE HEADING */
+
+.assignment-table-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 22px;
+}
+
+.assignment-table-heading h3 {
+    font-size: 17px;
+    color: #FFFFFF;
+    margin-bottom: 6px;
+}
+
+.assignment-table-heading p {
+    color: #B8C5D6;
+    font-size: 12px;
+}
+
+/* SEARCH INPUT */
+
+.assignment-table-heading input {
+    width: 260px;
+    padding: 11px 14px;
+    background: #101B2D;
+    color: #FFFFFF;
+    border: 1px solid #3A506D;
+    border-radius: 7px;
+    outline: none;
+    font-size: 12px;
+}
+
+.assignment-table-heading input::placeholder {
+    color: #91A4BC;
+}
+
+.assignment-table-heading input:focus {
+    border-color: #3978F6;
+    box-shadow: 0 0 0 3px rgba(57,120,246,0.12);
+}
+
+/* TABLE RESPONSIVE */
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* ASSIGNMENT TABLE */
+
+.assignment-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 950px;
+    background: #142238;
+}
+
+.assignment-table thead {
+    background: #0B1729;
+}
+
+.assignment-table th {
+    padding: 15px 12px;
+    color: #C8D6E8;
+    font-size: 11px;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+    border-bottom: 1px solid #354A65;
+}
+
+.assignment-table td {
+    padding: 15px 12px;
+    color: #DCE6F2;
+    font-size: 12px;
+    border-bottom: 1px solid #2B3D56;
+    vertical-align: middle;
+}
+
+.assignment-table tbody tr:nth-child(even) {
+    background: #192B43;
+}
+
+.assignment-table tbody tr:hover {
+    background: #263D5B;
+}
+
+/* EMPLOYEE AND ASSET DETAILS */
+
+.assignment-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.assignment-details strong {
+    color: #FFFFFF;
+    font-size: 12px;
+}
+
+.assignment-details small {
+    color: #B8C8DC;
+    font-size: 11px;
+}
+
+/* ASSIGNMENT ID */
+
+.assignment-id {
+    color: #8DB4FF;
+    font-weight: 700;
+}
+
+/* STATUS BADGES */
+
+.assignment-status {
+    display: inline-block;
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.status-assigned {
+    background: rgba(57,120,246,0.18);
+    color: #8DB4FF;
+}
+
+.status-returned {
+    background: rgba(21,155,114,0.18);
+    color: #55D6A5;
+}
+
+.status-other {
+    background: rgba(217,154,50,0.18);
+    color: #F3C36F;
+}
+
+/* REMARKS */
+
+.remarks-cell {
+    max-width: 160px;
+    overflow-wrap: anywhere;
+    color: #B8C8DC !important;
+}
+
+/* ACTION BUTTONS */
+
+.assignment-actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.assignment-actions a {
+    padding: 7px 10px;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: 0.2s ease;
+}
+
+.assignment-edit {
+    background: #244779;
+    color: #FFFFFF;
+    border: 1px solid #365E91;
+}
+
+.assignment-edit:hover {
+    background: #3978F6;
+}
+
+.assignment-delete {
+    background: rgba(217,87,87,0.12);
+    color: #FF9999;
+    border: 1px solid rgba(217,87,87,0.35);
+}
+
+.assignment-delete:hover {
+    background: #B83232;
+    color: #FFFFFF;
+}
+
+.assignment-actions a:hover {
+    opacity: 0.9;
+}
+
+/* EMPTY MESSAGE */
+
+.empty-message,
+.no-results {
+    text-align: center;
+    padding: 35px;
+    color: #B8C5D6;
+    font-size: 13px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+    .assignment-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .assignment-table-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .assignment-table-heading input {
+        width: 100%;
+    }
+}
+
+@media (max-width: 550px) {
+    .assignment-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .assignment-table-card {
+        padding: 16px;
+    }
+}
+/* =========================================
+   ASSETFLOW COMMON SIDEBAR
+========================================= */
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #FFFFFF;
+}
+
+.brand-icon {
+    flex-shrink: 0;
+    width: 39px;
+    height: 39px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #3978F6, #759AFF);
+    color: #FFFFFF;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: 800;
+    box-shadow: 0 0 18px rgba(57,120,246,0.35);
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.brand-text span {
+    color: #FFFFFF;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.6px;
+}
+
+.brand-text small {
+    color: #91A9CA;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+}
+
+.menu-heading {
+    color: #8193AD;
+    font-size: 11px;
+    font-weight: 750;
+    letter-spacing: 1.5px;
+}
+
+.menu-item {
+    color: #B5C2D5;
+    border: 1px solid transparent;
+    transition: all 0.25s ease;
+}
+
+.menu-item span {
+    width: 22px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 17px;
+    color: #91A9CA;
+}
+
+.menu-item:hover {
+    background: #263B59;
+    color: #FFFFFF;
+    border-color: #304967;
+}
+
+.menu-item.active {
+    background: linear-gradient(100deg, #285FC7, #3978F6);
+    color: #FFFFFF;
+    font-weight: 700;
+    border-color: rgba(255,255,255,0.08);
+    box-shadow: 0 5px 17px rgba(57,120,246,0.25);
+}
+
+.menu-item.active span {
+    color: #FFFFFF;
+}
+
+.support-box {
+    background: linear-gradient(140deg, #192941, #223A5B);
+    border: 1px solid #304967;
+    border-radius: 13px;
+    color: #FFFFFF;
+}
+
+.support-box h4 {
+    color: #FFFFFF;
+}
+
+.support-box p {
+    color: #BDCBE0;
+}
+
+.sidebar-version {
+    color: #8193AD;
+}
+/* =========================================
+   PREMIUM ASSIGNMENT SUMMARY CARDS
+========================================= */
+
+.assignment-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.assignment-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 22px;
+    background: linear-gradient(135deg, #192D49, #142238);
+    border: 1px solid #304967;
+    border-radius: 13px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.18);
+    transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.assignment-stat-card:hover {
+    transform: translateY(-3px);
+    border-color: #3978F6;
+}
+
+.stat-icon {
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: 700;
+}
+
+.total-icon {
+    background: rgba(57, 120, 246, 0.18);
+    color: #75A5FF;
+    border: 1px solid rgba(57, 120, 246, 0.25);
+}
+
+.assigned-icon {
+    background: rgba(21, 155, 114, 0.16);
+    color: #55D6A5;
+    border: 1px solid rgba(21, 155, 114, 0.25);
+}
+
+.returned-icon {
+    background: rgba(217, 154, 50, 0.16);
+    color: #F3C36F;
+    border: 1px solid rgba(217, 154, 50, 0.25);
+}
+
+.assignment-stat-card p {
+    color: #AFC1D8;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0 0 8px;
+}
+
+.assignment-stat-card h3 {
+    color: #FFFFFF;
+    font-size: 28px;
+    font-weight: 750;
+    margin: 0;
+    line-height: 1.2;
+}

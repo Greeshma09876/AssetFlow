@@ -113,16 +113,18 @@
 
                 <div class="date-display" id="currentDate"></div>
 
-                <div class="profile">
+				<div class="profile">
+				    <div class="profile-avatar"
+				         th:text="${#strings.substring(username, 0, 1).toUpperCase()}">A</div>
 
-                    <div class="profile-avatar">A</div>
+				    <div>
+				        <strong th:text="${username}">admin</strong>
 
-                    <div>
-                        <strong>Administrator</strong>
-                        <small>System Admin</small>
-                    </div>
-
-                </div>
+				        <small th:text="${role == 'ROLE_ADMIN' ? 'Administrator' : 'Staff'}">
+				            Staff
+				        </small>
+				    </div>
+				</div>
 				<form th:action="@{/logout}" method="post">
 				    <button type="submit" class="logout-btn">
 				        <span>↪</span> Logout
